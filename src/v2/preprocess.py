@@ -1,10 +1,15 @@
 import string
 import nltk
 from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
 from sklearn.utils import resample
+from contractions import fix
 import pandas as pd
+import re
 
-nltk.download('stopwords')
+nltk.download('stopwords') #Descarga la lista de stopwords
+nltk.download('wordnet')  #Descarga recursos necesarios para lematización
+lemmatizer = WordNetLemmatizer()
 
 def downsampling_data(data):
     # DOWNSAMPLING
@@ -36,12 +41,38 @@ def downsampling_data(data):
     return downsampled_data
 
 def remove_punctuations(text):
-    """Elimina signos de puntuación de un texto."""
+    #Elimina signos de puntuación de un texto.
     punctuations_list = string.punctuation
     temp = str.maketrans('', '', punctuations_list)
     return text.translate(temp)
 
 def remove_stopwords(text):
-    """Elimina palabras vacías del texto."""
-    stop_words = set(stopwords.words('english'))
-    return " ".join([word for word in str(text).split() if word.lower() not in stop_words])
+    #Elimina palabras vacías del texto, excepto not nor y but
+    stop_words = set(stopwords.words('english')) - {'not', 'nor', 'but'}
+    return " ".join([word for word in text.split() if word not in stop_words])
+
+def lemmatize_text(text):
+    #Lemmatiza las palabras del texto
+    return " ".join([lemmatizer.lemmatize(word) for word in text.split()])
+
+def clean_tweet(text):
+    text = re.sub(r"http\S+|www\S+|https\S+", "", text, flags=re.MULTILINE) #Elimina las urls
+    text = re.sub(r"@\w+", "", text) #Elimina las menciones
+    text = re.sub(r"#\w+", "", text) #Elimina los hashtags
+
+    return text
+
+def extract_mentions_hash(text):
+    #Extrae menciones y hashtags del texto para posterior uso
+    mentions = re.findall(r"@\w+", text)
+    hashtags = re.findall(r"#\w+", text)
+
+    return mentions, hashtags
+
+def to_lowercase(text):
+    #Pasamos todo el texto a minusculas
+    return text.lower()
+
+def expand_contractions(text):
+    #Eliminamos las contracciones
+    return fix(text)
