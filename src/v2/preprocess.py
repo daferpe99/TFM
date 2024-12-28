@@ -1,7 +1,7 @@
 import string
 import nltk
 from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
+from nltk.stem import WordNetLemmatizer, PorterStemmer
 from sklearn.utils import resample
 from contractions import fix
 import pandas as pd
@@ -10,6 +10,7 @@ import re
 nltk.download('stopwords') #Descarga la lista de stopwords
 nltk.download('wordnet')  #Descarga recursos necesarios para lematización
 lemmatizer = WordNetLemmatizer()
+stemmer = PorterStemmer()
 
 def downsampling_data(data):
     # DOWNSAMPLING
@@ -54,6 +55,18 @@ def remove_stopwords(text):
 def lemmatize_text(text):
     #Lemmatiza las palabras del texto
     return " ".join([lemmatizer.lemmatize(word) for word in text.split()])
+
+def stem_text(text):
+    #Aplica stemming a las palabras del texto
+    return " ".join([stemmer.stem(word) for word in text.split()])
+
+def stem_and_lemmatize(text):
+    #Combina la lemmatización con el stemming del texto:
+    lemmatized = " ".join([lemmatizer.lemmatize(word) for word in text.split()])
+    stem = " ".join([stemmer.stem(word) for word in lemmatized.split()])
+
+    return stem
+
 
 def clean_tweet(text):
     text = re.sub(r"http\S+|www\S+|https\S+", "", text, flags=re.MULTILINE) #Elimina las urls

@@ -1,0 +1,24 @@
+Modelo: Modelo LSTM con lematizacion y stemming
+Resumen del modelo:
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ embedding (Embedding)       (None, 100, 32)           231776    
+                                                                 
+ lstm (LSTM)                 (None, 16)                3136      
+                                                                 
+ dense (Dense)               (None, 32)                544       
+                                                                 
+ dense_1 (Dense)             (None, 1)                 33        
+                                                                 
+=================================================================
+Total params: 235,489
+Trainable params: 235,489
+Non-trainable params: 0
+_________________________________________________________________
+
+Resultados de evaluación:
+Pérdida: 0.7396
+Precisión: 0.6293
+--------------------------------------------------

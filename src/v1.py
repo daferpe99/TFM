@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-
+import io
 import string
 import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
@@ -135,3 +135,20 @@ history = model.fit(train_sequences, train_Y,
 test_loss, test_accuracy = model.evaluate(test_sequences, test_Y)
 print('Test Loss :',test_loss)
 print('Test Accuracy :',test_accuracy)
+
+with open("../resultados/v1.txt", 'a') as file:
+    # Guardar el nombre del modelo
+    file.write(f"Modelo: LSTM procesamiento de texto\n")
+
+    # Capturar el resumen del modelo
+    file.write("Resumen del modelo:\n")
+    summary_stream = io.StringIO()
+    model.summary(print_fn=lambda x: summary_stream.write(x + "\n"))
+    file.write(summary_stream.getvalue())
+
+    # Guardar resultados de evaluación
+    file.write(f"\nResultados de evaluación:\n")
+    file.write(f"Pérdida: {test_loss:.4f}\n")
+    file.write(f"Precisión: {test_accuracy:.4f}\n")
+    
+    file.write("-" * 50 + "\n")
