@@ -1,10 +1,10 @@
-Modelo: LSTM procesamiento de texto con downsampling
+Modelo: LSTM procesamiento de texto
 Resumen del modelo:
 Model: "sequential"
 _________________________________________________________________
  Layer (type)                Output Shape              Param #   
 =================================================================
- embedding (Embedding)       (None, 100, 32)           375680    
+ embedding (Embedding)       (None, 100, 32)           1156224   
                                                                  
  lstm (LSTM)                 (None, 16)                3136      
                                                                  
@@ -13,12 +13,12 @@ _________________________________________________________________
  dense_1 (Dense)             (None, 1)                 33        
                                                                  
 =================================================================
-Total params: 379,393
-Trainable params: 379,393
+Total params: 1,159,937
+Trainable params: 1,159,937
 Non-trainable params: 0
 _________________________________________________________________
 
-Resultados de evaluaciï¿½n:
-Pï¿½rdida: 0.6931
-Precisiï¿½n: 0.5103
+Resultados de evaluación:
+Pérdida: 0.3551
+Precisión: 0.8860
 --------------------------------------------------

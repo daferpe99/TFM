@@ -23,8 +23,8 @@ plot_samples(data)
 
 
 #Donwsampling de los datos
-#data = preprocess.downsampling_data(data)
-#plot_samples(data)
+data = preprocess.downsampling_data(data)
+plot_samples(data)
 
 # Preprocesar tweets a nivel de usuario
 data["tweets_clean"] = data["tweets"].apply(preprocess.preprocess_tweets)
@@ -87,5 +87,5 @@ plot_training_history(history)
 loss, accuracy = evaluate_model(model, x_text_test, x_numeric_test, y_test)
 
 
-#save_results("../../resultados/v3_texto+fechacreacionusuario.txt",model=model, loss=loss, accuracy=accuracy, model_name="Modelo LSTM multimodal texto + fecha de creacion usuario")
+save_results("../../resultados/v3_texto+fechacreacionusuario_downsampled.txt",model=model, loss=loss, accuracy=accuracy, model_name="Modelo LSTM multimodal texto + fecha de creacion usuario con downsampling")
 

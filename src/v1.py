@@ -54,8 +54,8 @@ majority_downsampled = resample(
 )
 
 # Combinar el downsampled de la clase mayoritaria con la clase minoritaria
-downsampled_data = pd.concat([majority_downsampled, minority_class])
-
+#downsampled_data = pd.concat([majority_downsampled, minority_class])
+downsampled_data = result_df
 # Opcional: mezclar el dataset para eliminar cualquier patrón
 downsampled_data = downsampled_data.sample(frac=1, random_state=42).reset_index(drop=True)
 
@@ -136,7 +136,7 @@ test_loss, test_accuracy = model.evaluate(test_sequences, test_Y)
 print('Test Loss :',test_loss)
 print('Test Accuracy :',test_accuracy)
 
-with open("../resultados/v1.txt", 'a') as file:
+with open("../resultados/v1_sin_downsampling.txt", 'a') as file:
     # Guardar el nombre del modelo
     file.write(f"Modelo: LSTM procesamiento de texto\n")
 
