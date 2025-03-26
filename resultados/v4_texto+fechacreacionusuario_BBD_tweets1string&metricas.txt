@@ -1,0 +1,38 @@
+Modelo: Modelo LSTM multimodal texto + fecha de creacion usuario + carga de BBDD + agrupación de tweets en 1 string + métricas
+Resumen del modelo:
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ text_input (InputLayer)        [(None, 1)]          0           []                               
+                                                                                                  
+ text_vectorization (TextVector  (None, 100)         0           ['text_input[0][0]']             
+ ization)                                                                                         
+                                                                                                  
+ embedding (Embedding)          (None, 100, 32)      320000      ['text_vectorization[0][0]']     
+                                                                                                  
+ lstm (LSTM)                    (None, 16)           3136        ['embedding[0][0]']              
+                                                                                                  
+ numeric_input (InputLayer)     [(None, 1)]          0           []                               
+                                                                                                  
+ concatenate (Concatenate)      (None, 17)           0           ['lstm[0][0]',                   
+                                                                  'numeric_input[0][0]']          
+                                                                                                  
+ dense (Dense)                  (None, 128)          2304        ['concatenate[0][0]']            
+                                                                                                  
+ dropout (Dropout)              (None, 128)          0           ['dense[0][0]']                  
+                                                                                                  
+ dense_1 (Dense)                (None, 64)           8256        ['dropout[0][0]']                
+                                                                                                  
+ dense_2 (Dense)                (None, 1)            65          ['dense_1[0][0]']                
+                                                                                                  
+==================================================================================================
+Total params: 333,761
+Trainable params: 333,761
+Non-trainable params: 0
+__________________________________________________________________________________________________
+
+Resultados de evaluación:
+Pérdida: 0.3269
+Precisión: 0.9006
+--------------------------------------------------

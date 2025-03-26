@@ -16,33 +16,18 @@ lemmatizer = WordNetLemmatizer()
 stemmer = PorterStemmer()
 
 def downsampling_data(data):
-    # DOWNSAMPLING
-    # Separar las clases en dos DataFrames: clase mayoritaria y clase minoritaria
-    majority_class = data[data['label'] == 'human']
-    minority_class = data[data['label'] == 'bot']
+    bots = data[data["label"] == "bot"]
+    humans = data[data["label"] == "human"]
 
-    # Aplicar downsampling a la clase mayoritaria
-    majority_downsampled = resample(
-        majority_class,
-        replace=False,                 # Sin reemplazo
-        n_samples=len(minority_class), # Igualar el número de muestras de la clase minoritaria
-        random_state=42                # Para reproducibilidad
-    )
+    # Asegura que la clase mayoritaria se reduzca a tamaño de la minoritaria
+    if len(bots) < len(humans):
+        humans_downsampled = humans.sample(len(bots), random_state=42)
+        data_balanced = pd.concat([bots, humans_downsampled])
+    else:
+        bots_downsampled = bots.sample(len(humans), random_state=42)
+        data_balanced = pd.concat([bots_downsampled, humans])
 
-    # Combinar el downsampled de la clase mayoritaria con la clase minoritaria
-    downsampled_data = pd.concat([majority_downsampled, minority_class])
-
-    # Opcional: mezclar el dataset para eliminar cualquier patrón
-    downsampled_data = downsampled_data.sample(frac=1, random_state=42).reset_index(drop=True)
-
-    # Mostrar el conteo de etiquetas después del downsampling
-    print(downsampled_data['label'].value_counts())
-
-
-    # Convertir 'ordered_label' en binario: 'human' -> 0 y 'bot' -> 1
-    downsampled_data['label'] = downsampled_data['label'].map({'human': 0, 'bot': 1})
-
-    return downsampled_data
+    return data_balanced.sample(frac=1, random_state=42).reset_index(drop=True)
 
 #PREPROCESS TEXT
 def remove_punctuations(text):
@@ -72,11 +57,28 @@ def stem_and_lemmatize(text):
     return stem
 
 def clean_tweet(text):
-    text = re.sub(r"http\S+|www\S+|https\S+", "", text, flags=re.MULTILINE) #Elimina las urls
-    text = re.sub(r"@\w+", "", text) #Elimina las menciones
-    text = re.sub(r"#\w+", "", text) #Elimina los hashtags
+    if not isinstance(text, str):
+        return ""
 
-    return text
+    try:
+        # Normalizar texto a UTF-8 válido ignorando errores
+        text = text.encode('utf-8', 'ignore').decode('utf-8', 'ignore')
+
+        # Eliminar URLs, menciones, hashtags
+        text = re.sub(r"http\S+|www\S+|https\S+", "", text, flags=re.MULTILINE)
+        text = re.sub(r"@\w+", "", text)
+        text = re.sub(r"#\w+", "", text)
+
+        # Opcional: eliminar caracteres especiales o emojis
+        text = re.sub(r"[^a-zA-Z0-9\s]", "", text)
+
+        # Espacios innecesarios
+        text = text.strip()
+
+        return text
+    except Exception as e:
+        print(f"[⚠️ Error al limpiar texto]: {e}")
+        return ""
 
 def extract_mentions_hash(text):
     #Extrae menciones y hashtags del texto para posterior uso

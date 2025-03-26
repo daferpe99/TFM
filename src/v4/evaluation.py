@@ -1,4 +1,5 @@
 import io
+from sklearn.metrics import classification_report, confusion_matrix
 
 def evaluate_model(model, test_X, test_Y):
     """Evalúa el modelo en datos de prueba."""
@@ -7,9 +8,20 @@ def evaluate_model(model, test_X, test_Y):
     return loss, accuracy
 
 def evaluate_model(model, x_text_test, x_num_test, y_test):
-    """Evalúa el modelo en datos de prueba."""
-    loss, accuracy = model.evaluate({'text_input': x_text_test, 'numeric_input': x_num_test}, y_test)
+    loss, accuracy = model.evaluate(
+        {"text_input": x_text_test, "numeric_input": x_num_test}, y_test, verbose=1
+    )
     print(f"Loss: {loss:.4f}, Accuracy: {accuracy:.4f}")
+
+    y_pred_probs = model.predict({"text_input": x_text_test, "numeric_input": x_num_test})
+    y_pred = (y_pred_probs > 0.5).astype(int)
+
+    print("\n Classification Report:")
+    print(classification_report(y_test, y_pred))
+
+    print("\n🧩 Confusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
+
     return loss, accuracy
 
 def save_results(file_path, model, loss, accuracy, model_name, additional_info=None):

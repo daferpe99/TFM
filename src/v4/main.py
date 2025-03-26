@@ -3,13 +3,14 @@ import preprocess
 from model import build_model, build_multimodal_model
 from training import train_model
 from evaluation import evaluate_model, save_results
-from visualization import plot_samples, plot_training_history
+from visualization import plot_samples, plot_training_history, plot_confusion_matrix
 import pandas as pd
 import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from sklearn.model_selection import train_test_split
+from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
 
 
@@ -21,11 +22,14 @@ plot_samples(data)
 
 
 #Donwsampling de los datos
-#data = preprocess.downsampling_data(data)
-#plot_samples(data)
+data = preprocess.downsampling_data(data)
+plot_samples(data)
 
 # Preprocesar texto de los tweets
 data["tweet_sample_clean"] = data["tweet_sample"].apply(preprocess.clean_tweet)
+# Normalizar el texto para prevenir errores de codificación
+data["tweet_sample_clean"] = data["tweet_sample_clean"].apply(preprocess.normalize_text)
+data["tweet_sample_clean"] = data["tweet_sample_clean"].apply(preprocess.remove_emojis)
 
 # Filtrar datos inválidos
 data = data[data["tweet_sample_clean"].str.len() > 2]
@@ -57,24 +61,49 @@ print(f"Tamaño de y: {len(y)}")
 # Dividir datos en entrenamiento y prueba
 
 x_text_train, x_text_test, x_numeric_train, x_numeric_test, y_train, y_test = train_test_split(
-    x_text, x_numeric, y, test_size=0.2, random_state=42
+    x_text, x_numeric, y, test_size=0.2, stratify=y, random_state=42,
 )
+
+#Convertir todo a arrays válidos
+x_text_train = np.array(x_text_train).astype(str)
+x_text_test = np.array(x_text_test).astype(str)
+x_numeric_train = np.array(x_numeric_train).astype(np.float32)
+x_numeric_test = np.array(x_numeric_test).astype(np.float32)
+y_train = np.array(y_train)
+y_test = np.array(y_test)
+
+# Calcular pesos de clase para balancear la penalización
+class_weights = compute_class_weight(class_weight="balanced", classes=np.unique(y_train), y=y_train)
+class_weight_dict = dict(enumerate(class_weights))
+print("Pesos de clase:", class_weight_dict)
 
 # Construir y entrenar el modelo
 model, text_vectorizer = build_multimodal_model()
 
+
 #Ajustar vectorizador del texto
 text_vectorizer.adapt(x_text_train)
 
+for i, text in enumerate(data["tweet_sample_clean"]):
+    try:
+        text.encode("utf-8").decode("utf-8")
+    except UnicodeDecodeError as e:
+        print(f"❌ Error en fila {i}: {text}")
+
 
 #Entramiento del modelo
-history = train_model(model, x_text_train, x_text_test, x_numeric_train, x_numeric_test, y_train, y_test)
+history = train_model(model, x_text_train, x_text_test, x_numeric_train, x_numeric_test, y_train, y_test, class_weight=class_weight_dict)
 #Visualizar resultados
 plot_training_history(history)
 
+
+print("Train class distribution:", np.bincount(y_train))
+print("Test class distribution:", np.bincount(y_test))
 # Evaluación
 loss, accuracy = evaluate_model(model, x_text_test, x_numeric_test, y_test)
 
+y_pred = (model.predict({"text_input": x_text_test, "numeric_input": x_numeric_test}) > 0.5).astype(int)
+plot_confusion_matrix(y_test, y_pred)
 
-#save_results("../../resultados/v3_texto+fechacreacionusuario_downsampled.txt",model=model, loss=loss, accuracy=accuracy, model_name="Modelo LSTM multimodal texto + fecha de creacion usuario con downsampling")
+#save_results("../../resultados/v4_texto+fechacreacionusuario_BBD_tweets1string&metricas.txt",model=model, loss=loss, accuracy=accuracy, model_name="Modelo LSTM multimodal texto + fecha de creacion usuario + carga de BBDD + agrupación de tweets en 1 string + métricas")
 
