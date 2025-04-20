@@ -2,7 +2,7 @@ from data_load import load_data, split_data
 import preprocess
 from model import build_model, build_multimodal_model
 from training import train_model
-from evaluation import evaluate_model, save_results
+from evaluation import evaluate_model, save_results_completo
 from visualization import plot_samples, plot_training_history, plot_confusion_matrix
 import pandas as pd
 import tensorflow as tf
@@ -12,8 +12,19 @@ from keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from sklearn.model_selection import train_test_split
 from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
+import random
+import os
+import time
 
+# Establecer semillas para reproducibilidad
+SEED = 42
+os.environ['PYTHONHASHSEED'] = str(SEED)
+random.seed(SEED)
+np.random.seed(SEED)
+tf.random.set_seed(SEED)
 
+# Marcar tiempo de inicio de la carga y preprocesamiento
+start_time = time.time()
 
 # Carga y preprocesa los datos
 data = load_data()
@@ -47,6 +58,11 @@ data["user_age_days"] = (pd.Timestamp.now().normalize() - data["user_creation"])
 # Escalar las métricas
 data["user_age_scaled"] = data["user_age_days"] / data["user_age_days"].max()
 
+# Medir tiempo al terminar toda la preparación
+end_time = time.time()
+elapsed_time = end_time - start_time
+print(f"⏱️ Tiempo de carga y preprocesamiento (v4): {elapsed_time:.2f} segundos")
+
 # Separar características y etiquetas
 x_text = data["tweet_sample_clean"].values
 x_numeric = data["user_age_days"].values
@@ -72,10 +88,15 @@ x_numeric_test = np.array(x_numeric_test).astype(np.float32)
 y_train = np.array(y_train)
 y_test = np.array(y_test)
 
-# Calcular pesos de clase para balancear la penalización
-class_weights = compute_class_weight(class_weight="balanced", classes=np.unique(y_train), y=y_train)
-class_weight_dict = dict(enumerate(class_weights))
+# Calcular class weights
+classes = np.unique(y_train)
+class_weights = compute_class_weight(class_weight='balanced', classes=classes, y=y_train)
+class_weight_dict = dict(zip(classes, class_weights))
 print("Pesos de clase:", class_weight_dict)
+
+# Solo aplicar class_weight si hay desequilibrio importante
+use_class_weight = abs(class_weight_dict[0] - class_weight_dict[1]) > 0.1
+print(use_class_weight)
 
 # Construir y entrenar el modelo
 model, text_vectorizer = build_multimodal_model()
@@ -92,7 +113,7 @@ for i, text in enumerate(data["tweet_sample_clean"]):
 
 
 #Entramiento del modelo
-history = train_model(model, x_text_train, x_text_test, x_numeric_train, x_numeric_test, y_train, y_test, class_weight=class_weight_dict)
+history = train_model(model, x_text_train, x_text_test, x_numeric_train, x_numeric_test, y_train, y_test, class_weight=class_weight_dict if use_class_weight else None)
 #Visualizar resultados
 plot_training_history(history)
 
@@ -105,5 +126,14 @@ loss, accuracy = evaluate_model(model, x_text_test, x_numeric_test, y_test)
 y_pred = (model.predict({"text_input": x_text_test, "numeric_input": x_numeric_test}) > 0.5).astype(int)
 plot_confusion_matrix(y_test, y_pred)
 
-#save_results("../../resultados/v4_texto+fechacreacionusuario_BBD_tweets1string&metricas.txt",model=model, loss=loss, accuracy=accuracy, model_name="Modelo LSTM multimodal texto + fecha de creacion usuario + carga de BBDD + agrupación de tweets en 1 string + métricas")
-
+save_results_completo(
+    file_path="../../resultados/v4_completo.txt",
+    model=model,
+    loss=loss,
+    accuracy=accuracy,
+    model_name="Modelo LSTM multimodal con complejidad aumentada",
+    x_text_test=x_text_test,
+    x_num_test=x_numeric_test,
+    y_test=y_test,
+    additional_info={"Fecha": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")}
+)

@@ -50,49 +50,61 @@ def process_tweet(tweet):
 def insert_tweets_from_files(tweet_folder_path):
     """Procesa archivos de tweets y los inserta en la BD evitando duplicados."""
     batch_size = 1000
-    batch = []
+    log_path = os.path.join(tweet_folder_path, "archivos_ingestados.txt")
 
-    for file_name in os.listdir(tweet_folder_path):
+    for file_name in sorted(os.listdir(tweet_folder_path)):
+        if not file_name.endswith(".json"):
+            continue  # Evita procesar archivos como el log
+
         file_path = os.path.join(tweet_folder_path, file_name)
         print(f"\n📂 Procesando archivo: {file_name}")
 
-        with open(file_path, "r", encoding="utf-8") as file:
-            tweets = json.load(file)
+        try:
+            with open(file_path, "r", encoding="utf-8") as file:
+                tweets = json.load(file)
+        except Exception as e:
+            print(f"❌ Error al leer el archivo {file_name}: {e}")
+            continue
 
+        batch = []
         for tweet in tweets:
             tweet_data = process_tweet(tweet)
             user_id = f"u{tweet.get('author_id', '')}"
 
-            # Verificar si el usuario ya existe en la base de datos
             user_exists = users_collection.find_one({"user_id": user_id}, {"_id": 1})
             if not user_exists:
                 print(f"⚠️ Usuario {user_id} no encontrado en la BD. Creando nuevo registro.")
                 users_collection.insert_one({"user_id": user_id, "tweets": []})
 
-            # **Verificar si el tweet ya está en la BD para evitar duplicados**
             existing_tweet = users_collection.find_one(
                 {"user_id": user_id, "tweets.tweet_id": tweet_data["tweet_id"]},
                 {"tweets.$": 1}
             )
-
             if existing_tweet:
                 print(f"🔴 Tweet {tweet_data['tweet_id']} ya está en la BD. Omitiendo...")
-                continue  # Evitar insertar duplicados
+                continue
 
-            # **Actualizar usuario agregando el tweet si no está duplicado**
             update_query = {"user_id": user_id}
-            update_data = {"$addToSet": {"tweets": tweet_data}}  # Evita duplicados en la lista
-
-            update_operation = UpdateOne(update_query, update_data)
-            batch.append(update_operation)
+            update_data = {"$addToSet": {"tweets": tweet_data}}
+            batch.append(UpdateOne(update_query, update_data))
 
             if len(batch) >= batch_size:
                 bulk_insert(batch)
                 batch = []
 
-    if batch:
-        bulk_insert(batch)
+        if batch:
+            bulk_insert(batch)
 
+        # ✅ Eliminar archivo y registrar en log
+        try:
+            os.remove(file_path)
+            print(f"🗑️ Archivo {file_name} eliminado tras ingesta exitosa.")
+
+            with open(log_path, "a", encoding="utf-8") as log_file:
+                log_file.write(file_name + "\n")
+
+        except Exception as e:
+            print(f"❌ Error al eliminar el archivo {file_name}: {e}")
 def bulk_insert(batch):
     """Realiza la inserción en MongoDB y maneja errores."""
     try:
@@ -108,4 +120,4 @@ def bulk_insert(batch):
             error_log.write("\n\n")
 
 # Llamar a la función con la carpeta que contiene los tweets
-insert_tweets_from_files("../../data/tweets")
+insert_tweets_from_files("../../data/tweets/tweet_1")

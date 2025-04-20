@@ -11,10 +11,13 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from sklearn.model_selection import train_test_split
 import numpy as np
+import time
 
 TWEETS_PATH = '../../data/tweet.json'
 LABELS_PATH = '../../data/label.csv'
 USERS_PATH = '../../data/user.json'
+
+start_time = time.time()
 
 # Carga y preprocesa los datos
 data = load_data(TWEETS_PATH, LABELS_PATH, USERS_PATH)
@@ -51,6 +54,11 @@ data_expanded = data.explode("tweets_clean")
 
 # Eliminar filas donde tweets_clean es NaN después de expandir
 data_expanded = data_expanded.dropna(subset=["tweets_clean"])
+
+# Medir tiempo al terminar toda la preparación
+end_time = time.time()
+elapsed_time = end_time - start_time
+print(f"⏱️ Tiempo de carga y preprocesamiento (v3): {elapsed_time:.2f} segundos")
 
 # Crear inputs para el modelo
 x_text = data_expanded["tweets_clean"].values
