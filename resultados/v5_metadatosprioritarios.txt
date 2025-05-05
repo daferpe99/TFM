@@ -1,0 +1,345 @@
+Modelo: Modelo LSTM multimodal con complejidad aumentada
+Resumen del modelo:
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ text_input (InputLayer)        [(None, 1)]          0           []                               
+                                                                                                  
+ text_vectorization (TextVector  (None, 150)         0           ['text_input[0][0]']             
+ ization)                                                                                         
+                                                                                                  
+ embedding (Embedding)          (None, 150, 32)      320000      ['text_vectorization[0][0]']     
+                                                                                                  
+ bidirectional (Bidirectional)  (None, 150, 32)      6272        ['embedding[0][0]']              
+                                                                                                  
+ dropout (Dropout)              (None, 150, 32)      0           ['bidirectional[0][0]']          
+                                                                                                  
+ bidirectional_1 (Bidirectional  (None, 16)          2624        ['dropout[0][0]']                
+ )                                                                                                
+                                                                                                  
+ dropout_1 (Dropout)            (None, 16)           0           ['bidirectional_1[0][0]']        
+                                                                                                  
+ numeric_input (InputLayer)     [(None, 8)]          0           []                               
+                                                                                                  
+ concatenate (Concatenate)      (None, 24)           0           ['dropout_1[0][0]',              
+                                                                  'numeric_input[0][0]']          
+                                                                                                  
+ dense (Dense)                  (None, 128)          3200        ['concatenate[0][0]']            
+                                                                                                  
+ batch_normalization (BatchNorm  (None, 128)         512         ['dense[0][0]']                  
+ alization)                                                                                       
+                                                                                                  
+ dropout_2 (Dropout)            (None, 128)          0           ['batch_normalization[0][0]']    
+                                                                                                  
+ dense_1 (Dense)                (None, 64)           8256        ['dropout_2[0][0]']              
+                                                                                                  
+ dropout_3 (Dropout)            (None, 64)           0           ['dense_1[0][0]']                
+                                                                                                  
+ dense_2 (Dense)                (None, 32)           2080        ['dropout_3[0][0]']              
+                                                                                                  
+ dense_3 (Dense)                (None, 1)            33          ['dense_2[0][0]']                
+                                                                                                  
+==================================================================================================
+Total params: 342,977
+Trainable params: 342,721
+Non-trainable params: 256
+__________________________________________________________________________________________________
+
+Resultados de evaluación:
+Pérdida: 0.6277
+Precisión (accuracy): 0.6219
+
+📊 Reporte de clasificación:
+              precision    recall  f1-score   support
+
+           0     0.6066    0.6981    0.6491       265
+           1     0.6429    0.5455    0.5902       264
+
+    accuracy                         0.6219       529
+   macro avg     0.6247    0.6218    0.6196       529
+weighted avg     0.6247    0.6219    0.6197       529
+
+🧩 Matriz de confusión:
+[[185,  80],
+ [120, 144]]
+
+Información adicional:
+Fecha: 2025-04-23 20:45:56
+------------------------------------------------------------
+Modelo: Modelo LSTM multimodal con complejidad aumentada
+Resumen del modelo:
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ text_input (InputLayer)        [(None, 1)]          0           []                               
+                                                                                                  
+ text_vectorization (TextVector  (None, 150)         0           ['text_input[0][0]']             
+ ization)                                                                                         
+                                                                                                  
+ embedding (Embedding)          (None, 150, 32)      320000      ['text_vectorization[0][0]']     
+                                                                                                  
+ bidirectional (Bidirectional)  (None, 150, 32)      6272        ['embedding[0][0]']              
+                                                                                                  
+ dropout (Dropout)              (None, 150, 32)      0           ['bidirectional[0][0]']          
+                                                                                                  
+ bidirectional_1 (Bidirectional  (None, 16)          2624        ['dropout[0][0]']                
+ )                                                                                                
+                                                                                                  
+ dropout_1 (Dropout)            (None, 16)           0           ['bidirectional_1[0][0]']        
+                                                                                                  
+ numeric_input (InputLayer)     [(None, 8)]          0           []                               
+                                                                                                  
+ concatenate (Concatenate)      (None, 24)           0           ['dropout_1[0][0]',              
+                                                                  'numeric_input[0][0]']          
+                                                                                                  
+ dense (Dense)                  (None, 128)          3200        ['concatenate[0][0]']            
+                                                                                                  
+ batch_normalization (BatchNorm  (None, 128)         512         ['dense[0][0]']                  
+ alization)                                                                                       
+                                                                                                  
+ dropout_2 (Dropout)            (None, 128)          0           ['batch_normalization[0][0]']    
+                                                                                                  
+ dense_1 (Dense)                (None, 64)           8256        ['dropout_2[0][0]']              
+                                                                                                  
+ dropout_3 (Dropout)            (None, 64)           0           ['dense_1[0][0]']                
+                                                                                                  
+ dense_2 (Dense)                (None, 32)           2080        ['dropout_3[0][0]']              
+                                                                                                  
+ dense_3 (Dense)                (None, 1)            33          ['dense_2[0][0]']                
+                                                                                                  
+==================================================================================================
+Total params: 342,977
+Trainable params: 342,721
+Non-trainable params: 256
+__________________________________________________________________________________________________
+
+Resultados de evaluación:
+Pérdida: 0.6292
+Precisión (accuracy): 0.6144
+
+📊 Reporte de clasificación:
+              precision    recall  f1-score   support
+
+           0     0.6027    0.6755    0.6370       265
+           1     0.6293    0.5530    0.5887       264
+
+    accuracy                         0.6144       529
+   macro avg     0.6160    0.6143    0.6129       529
+weighted avg     0.6160    0.6144    0.6129       529
+
+🧩 Matriz de confusión:
+[[179,  86],
+ [118, 146]]
+
+Información adicional:
+Fecha: 2025-04-23 20:47:21
+------------------------------------------------------------
+Modelo: Modelo LSTM multimodal con complejidad aumentada
+Resumen del modelo:
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ text_input (InputLayer)        [(None, 1)]          0           []                               
+                                                                                                  
+ text_vectorization (TextVector  (None, 150)         0           ['text_input[0][0]']             
+ ization)                                                                                         
+                                                                                                  
+ embedding (Embedding)          (None, 150, 32)      320000      ['text_vectorization[0][0]']     
+                                                                                                  
+ bidirectional (Bidirectional)  (None, 150, 32)      6272        ['embedding[0][0]']              
+                                                                                                  
+ dropout (Dropout)              (None, 150, 32)      0           ['bidirectional[0][0]']          
+                                                                                                  
+ bidirectional_1 (Bidirectional  (None, 16)          2624        ['dropout[0][0]']                
+ )                                                                                                
+                                                                                                  
+ dropout_1 (Dropout)            (None, 16)           0           ['bidirectional_1[0][0]']        
+                                                                                                  
+ numeric_input (InputLayer)     [(None, 8)]          0           []                               
+                                                                                                  
+ concatenate (Concatenate)      (None, 24)           0           ['dropout_1[0][0]',              
+                                                                  'numeric_input[0][0]']          
+                                                                                                  
+ dense (Dense)                  (None, 128)          3200        ['concatenate[0][0]']            
+                                                                                                  
+ batch_normalization (BatchNorm  (None, 128)         512         ['dense[0][0]']                  
+ alization)                                                                                       
+                                                                                                  
+ dropout_2 (Dropout)            (None, 128)          0           ['batch_normalization[0][0]']    
+                                                                                                  
+ dense_1 (Dense)                (None, 64)           8256        ['dropout_2[0][0]']              
+                                                                                                  
+ dropout_3 (Dropout)            (None, 64)           0           ['dense_1[0][0]']                
+                                                                                                  
+ dense_2 (Dense)                (None, 32)           2080        ['dropout_3[0][0]']              
+                                                                                                  
+ dense_3 (Dense)                (None, 1)            33          ['dense_2[0][0]']                
+                                                                                                  
+==================================================================================================
+Total params: 342,977
+Trainable params: 342,721
+Non-trainable params: 256
+__________________________________________________________________________________________________
+
+Resultados de evaluación:
+Pérdida: 0.6335
+Precisión (accuracy): 0.6238
+
+📊 Reporte de clasificación:
+              precision    recall  f1-score   support
+
+           0     0.6138    0.6717    0.6414       265
+           1     0.6360    0.5758    0.6044       264
+
+    accuracy                         0.6238       529
+   macro avg     0.6249    0.6237    0.6229       529
+weighted avg     0.6249    0.6238    0.6229       529
+
+🧩 Matriz de confusión:
+[[178,  87],
+ [112, 152]]
+
+Información adicional:
+Fecha: 2025-04-23 20:49:49
+------------------------------------------------------------
+Modelo: Modelo LSTM multimodal con complejidad aumentada
+Resumen del modelo:
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ text_input (InputLayer)        [(None, 1)]          0           []                               
+                                                                                                  
+ text_vectorization (TextVector  (None, 150)         0           ['text_input[0][0]']             
+ ization)                                                                                         
+                                                                                                  
+ embedding (Embedding)          (None, 150, 32)      320000      ['text_vectorization[0][0]']     
+                                                                                                  
+ bidirectional (Bidirectional)  (None, 150, 32)      6272        ['embedding[0][0]']              
+                                                                                                  
+ dropout (Dropout)              (None, 150, 32)      0           ['bidirectional[0][0]']          
+                                                                                                  
+ bidirectional_1 (Bidirectional  (None, 16)          2624        ['dropout[0][0]']                
+ )                                                                                                
+                                                                                                  
+ dropout_1 (Dropout)            (None, 16)           0           ['bidirectional_1[0][0]']        
+                                                                                                  
+ numeric_input (InputLayer)     [(None, 8)]          0           []                               
+                                                                                                  
+ concatenate (Concatenate)      (None, 24)           0           ['dropout_1[0][0]',              
+                                                                  'numeric_input[0][0]']          
+                                                                                                  
+ dense (Dense)                  (None, 128)          3200        ['concatenate[0][0]']            
+                                                                                                  
+ batch_normalization (BatchNorm  (None, 128)         512         ['dense[0][0]']                  
+ alization)                                                                                       
+                                                                                                  
+ dropout_2 (Dropout)            (None, 128)          0           ['batch_normalization[0][0]']    
+                                                                                                  
+ dense_1 (Dense)                (None, 64)           8256        ['dropout_2[0][0]']              
+                                                                                                  
+ dropout_3 (Dropout)            (None, 64)           0           ['dense_1[0][0]']                
+                                                                                                  
+ dense_2 (Dense)                (None, 32)           2080        ['dropout_3[0][0]']              
+                                                                                                  
+ dense_3 (Dense)                (None, 1)            33          ['dense_2[0][0]']                
+                                                                                                  
+==================================================================================================
+Total params: 342,977
+Trainable params: 342,721
+Non-trainable params: 256
+__________________________________________________________________________________________________
+
+Resultados de evaluación:
+Pérdida: 0.6300
+Precisión (accuracy): 0.5955
+
+📊 Reporte de clasificación:
+              precision    recall  f1-score   support
+
+           0     0.5710    0.7736    0.6571       265
+           1     0.6471    0.4167    0.5069       264
+
+    accuracy                         0.5955       529
+   macro avg     0.6090    0.5951    0.5820       529
+weighted avg     0.6090    0.5955    0.5821       529
+
+🧩 Matriz de confusión:
+[[205,  60],
+ [154, 110]]
+
+Información adicional:
+Fecha: 2025-04-23 20:50:40
+------------------------------------------------------------
+Modelo: Modelo LSTM multimodal con complejidad aumentada
+Resumen del modelo:
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ text_input (InputLayer)        [(None, 1)]          0           []                               
+                                                                                                  
+ text_vectorization (TextVector  (None, 150)         0           ['text_input[0][0]']             
+ ization)                                                                                         
+                                                                                                  
+ embedding (Embedding)          (None, 150, 32)      320000      ['text_vectorization[0][0]']     
+                                                                                                  
+ bidirectional (Bidirectional)  (None, 150, 32)      6272        ['embedding[0][0]']              
+                                                                                                  
+ dropout (Dropout)              (None, 150, 32)      0           ['bidirectional[0][0]']          
+                                                                                                  
+ bidirectional_1 (Bidirectional  (None, 16)          2624        ['dropout[0][0]']                
+ )                                                                                                
+                                                                                                  
+ dropout_1 (Dropout)            (None, 16)           0           ['bidirectional_1[0][0]']        
+                                                                                                  
+ numeric_input (InputLayer)     [(None, 8)]          0           []                               
+                                                                                                  
+ concatenate (Concatenate)      (None, 24)           0           ['dropout_1[0][0]',              
+                                                                  'numeric_input[0][0]']          
+                                                                                                  
+ dense (Dense)                  (None, 128)          3200        ['concatenate[0][0]']            
+                                                                                                  
+ batch_normalization (BatchNorm  (None, 128)         512         ['dense[0][0]']                  
+ alization)                                                                                       
+                                                                                                  
+ dropout_2 (Dropout)            (None, 128)          0           ['batch_normalization[0][0]']    
+                                                                                                  
+ dense_1 (Dense)                (None, 64)           8256        ['dropout_2[0][0]']              
+                                                                                                  
+ dropout_3 (Dropout)            (None, 64)           0           ['dense_1[0][0]']                
+                                                                                                  
+ dense_2 (Dense)                (None, 32)           2080        ['dropout_3[0][0]']              
+                                                                                                  
+ dense_3 (Dense)                (None, 1)            33          ['dense_2[0][0]']                
+                                                                                                  
+==================================================================================================
+Total params: 342,977
+Trainable params: 342,721
+Non-trainable params: 256
+__________________________________________________________________________________________________
+
+Resultados de evaluación:
+Pérdida: 0.6318
+Precisión (accuracy): 0.6219
+
+📊 Reporte de clasificación:
+              precision    recall  f1-score   support
+
+           0     0.5970    0.7547    0.6667       265
+           1     0.6649    0.4886    0.5633       264
+
+    accuracy                         0.6219       529
+   macro avg     0.6310    0.6217    0.6150       529
+weighted avg     0.6309    0.6219    0.6151       529
+
+🧩 Matriz de confusión:
+[[200,  65],
+ [135, 129]]
+
+Información adicional:
+Fecha: 2025-04-23 20:51:42
+------------------------------------------------------------
