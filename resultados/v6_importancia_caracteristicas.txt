@@ -1,0 +1,51 @@
+Modelo: Modelo final con validación cruzada y 10 metadatos
+Importancia de características (Permutation Importance):
+followers_count_scaled: 0.0000
+following_count_scaled: 0.0000
+tweet_count_scaled: 0.0000
+user_age_days_scaled: -0.0004
+followers_following_ratio_scaled: 0.0000
+tweets_per_day_scaled: 0.0000
+verified: 0.0774
+protected: 0.0000
+has_profile_image: 0.0029
+has_url: 0.0170
+
+Información adicional:
+Método: Permutation Importance
+Fecha: 2025-05-07 00:22:04
+--------------------------------------------------
+Modelo: Modelo final con validación cruzada y 10 metadatos
+Importancia de características (Permutation Importance):
+followers_count_scaled: 0.0000
+following_count_scaled: 0.0000
+tweet_count_scaled: 0.0000
+user_age_days_scaled: 0.0011
+followers_following_ratio_scaled: 0.0000
+tweets_per_day_scaled: 0.0000
+verified: 0.0769
+protected: 0.0000
+has_profile_image: 0.0052
+has_url: 0.0200
+
+Información adicional:
+Método: Permutation Importance
+Fecha: 2025-05-07 18:47:56
+--------------------------------------------------
+Modelo: Modelo final con validación cruzada y 10 metadatos
+Importancia de características (Permutation Importance):
+followers_count_scaled: 0.0000
+following_count_scaled: 0.0000
+tweet_count_scaled: 0.0000
+user_age_days_scaled: 0.0025
+followers_following_ratio_scaled: 0.0000
+tweets_per_day_scaled: 0.0000
+verified: 0.0684
+protected: 0.0000
+has_profile_image: 0.0032
+has_url: 0.0300
+
+Información adicional:
+Método: Permutation Importance
+Fecha: 2025-05-07 22:06:01
+--------------------------------------------------

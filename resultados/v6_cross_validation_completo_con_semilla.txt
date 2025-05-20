@@ -1,0 +1,60 @@
+Modelo: Modelo base completo con validación cruzada
+Fecha: 2025-05-18 10:19:34
+
+Accuracy: 0.6056 ± 0.0336
+Precision: 0.6011 ± 0.0246
+Recall: 0.6264 ± 0.1458
+F1: 0.6045 ± 0.0767
+
+Información adicional:
+Tipo de validación: StratifiedKFold
+Semilla: 42
+------------------------------------------------------------
+Modelo: Modelo base completo con validación cruzada
+Fecha: 2025-05-18 22:11:02
+
+Accuracy: 0.6093 ± 0.0230
+Precision: 0.6144 ± 0.0348
+Recall: 0.6125 ± 0.1463
+F1: 0.6017 ± 0.0641
+
+Información adicional:
+Tipo de validación: StratifiedKFold
+Semilla: 42
+------------------------------------------------------------
+Modelo: Modelo base completo con validación cruzada
+Fecha: 2025-05-18 22:37:42
+
+Accuracy: 0.6126 ± 0.0272
+Precision: 0.6020 ± 0.0236
+Recall: 0.6644 ± 0.1046
+F1: 0.6277 ± 0.0463
+
+Información adicional:
+Tipo de validación: StratifiedKFold
+Semilla: 42
+------------------------------------------------------------
+Modelo: Modelo base completo con validación cruzada
+Fecha: 2025-05-18 22:41:47
+
+Accuracy: 0.6074 ± 0.0259
+Precision: 0.6067 ± 0.0193
+Recall: 0.6279 ± 0.1845
+F1: 0.6002 ± 0.0943
+
+Información adicional:
+Tipo de validación: StratifiedKFold
+Semilla: 42
+------------------------------------------------------------
+Modelo: Modelo base completo con validación cruzada
+Fecha: 2025-05-18 22:45:30
+
+Accuracy: 0.6027 ± 0.0317
+Precision: 0.5949 ± 0.0164
+Recall: 0.6418 ± 0.1619
+F1: 0.6068 ± 0.0801
+
+Información adicional:
+Tipo de validación: StratifiedKFold
+Semilla: 42
+------------------------------------------------------------
