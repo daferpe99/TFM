@@ -28,11 +28,11 @@ PATH_PREDICTIONS = f"../../resultados/v6_predicciones_finales_{RESULTS_TAG}.csv"
 PATH_IMPORTANCE = f"../../resultados/v6_importancia_caracteristicas_{RESULTS_TAG}.txt"
 
 # Establecer semillas para reproducibilidad
-SEED = None
-#os.environ['PYTHONHASHSEED'] = str(SEED)
-#random.seed(SEED)
-#np.random.seed(SEED)
-#tf.random.set_seed(SEED)
+SEED = 42
+os.environ['PYTHONHASHSEED'] = str(SEED)
+random.seed(SEED)
+np.random.seed(SEED)
+tf.random.set_seed(SEED)
 
 # --- CARGA Y PREPROCESAMIENTO DE DATOS ---
 start_time = time.time()

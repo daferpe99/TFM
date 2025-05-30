@@ -1,0 +1,26 @@
+Modelo: Modelo final HPO completo + validación cruzada
+Fecha: 2025-05-21 22:49:17
+
+Accuracy: 0.6107 ± 0.0256
+Precision: 0.5955 ± 0.0271
+Recall: 0.7185 ± 0.1385
+F1: 0.6427 ± 0.0496
+
+Información adicional:
+Tipo de validación: StratifiedKFold
+Semilla: None
+Hiperparámetros óptimos: {'embedding_dim': 64, 'lstm_units': 32, 'dropout_1': 0.3, 'lstm_units_2': 8, 'dropout_2': 0.4, 'dense_1': 64, 'dropout_3': 0.5, 'dense_2': 64, 'dropout_4': 0.3, 'tuner/epochs': 2, 'tuner/initial_epoch': 0, 'tuner/bracket': 2, 'tuner/round': 0}
+------------------------------------------------------------
+Modelo: Modelo final HPO completo + validación cruzada
+Fecha: 2025-05-21 23:57:28
+
+Accuracy: 0.6195 ± 0.0192
+Precision: 0.5902 ± 0.0137
+Recall: 0.7755 ± 0.0560
+F1: 0.6695 ± 0.0249
+
+Información adicional:
+Tipo de validación: StratifiedKFold
+Semilla: 42
+Hiperparámetros óptimos: {'embedding_dim': 64, 'lstm_units': 32, 'dropout_1': 0.3, 'lstm_units_2': 8, 'dropout_2': 0.4, 'dense_1': 64, 'dropout_3': 0.5, 'dense_2': 64, 'dropout_4': 0.3, 'tuner/epochs': 2, 'tuner/initial_epoch': 0, 'tuner/bracket': 2, 'tuner/round': 0}
+------------------------------------------------------------

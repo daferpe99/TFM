@@ -1,0 +1,13 @@
+Modelo: Modelo final HPO reducido + validación cruzada
+Fecha: 2025-05-21 20:47:16
+
+Accuracy: 0.6071 ± 0.0194
+Precision: 0.5867 ± 0.0141
+Recall: 0.7185 ± 0.0711
+F1: 0.6445 ± 0.0310
+
+Información adicional:
+Tipo de validación: StratifiedKFold
+Semilla: None
+Hiperparámetros óptimos: {'embedding_dim': 64, 'lstm_units': 32, 'dropout_1': 0.3, 'lstm_units_2': 8, 'dropout_2': 0.4, 'dense_1': 64, 'dropout_3': 0.5, 'dense_2': 64, 'dropout_4': 0.3, 'tuner/epochs': 2, 'tuner/initial_epoch': 0, 'tuner/bracket': 2, 'tuner/round': 0}
+------------------------------------------------------------

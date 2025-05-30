@@ -54,8 +54,8 @@ majority_downsampled = resample(
 )
 
 # Combinar el downsampled de la clase mayoritaria con la clase minoritaria
-#downsampled_data = pd.concat([majority_downsampled, minority_class])
-downsampled_data = result_df
+downsampled_data = pd.concat([majority_downsampled, minority_class])
+#downsampled_data = result_df
 # Opcional: mezclar el dataset para eliminar cualquier patrón
 downsampled_data = downsampled_data.sample(frac=1, random_state=42).reset_index(drop=True)
 

@@ -1,60 +1,13 @@
-Modelo: Modelo base reducido con validación cruzada
-Fecha: 2025-05-18 22:49:25
+Modelo: Modelo final HPO reducido + validación cruzada
+Fecha: 2025-05-22 01:14:24
 
-Accuracy: 0.5863 ± 0.0355
-Precision: 0.5847 ± 0.0314
-Recall: 0.6052 ± 0.1459
-F1: 0.5851 ± 0.0712
-
-Información adicional:
-Tipo de validación: StratifiedKFold
-Semilla: 42
-------------------------------------------------------------
-Modelo: Modelo base reducido con validación cruzada
-Fecha: 2025-05-18 22:52:16
-
-Accuracy: 0.5929 ± 0.0336
-Precision: 0.5929 ± 0.0363
-Recall: 0.6058 ± 0.0572
-F1: 0.5968 ± 0.0292
+Accuracy: 0.6224 ± 0.0034
+Precision: 0.6123 ± 0.0059
+Recall: 0.6635 ± 0.0279
+F1: 0.6364 ± 0.0112
 
 Información adicional:
 Tipo de validación: StratifiedKFold
 Semilla: 42
-------------------------------------------------------------
-Modelo: Modelo base reducido con validación cruzada
-Fecha: 2025-05-18 22:55:03
-
-Accuracy: 0.6034 ± 0.0340
-Precision: 0.6000 ± 0.0334
-Recall: 0.6300 ± 0.1340
-F1: 0.6073 ± 0.0578
-
-Información adicional:
-Tipo de validación: StratifiedKFold
-Semilla: 42
-------------------------------------------------------------
-Modelo: Modelo base reducido con validación cruzada
-Fecha: 2025-05-18 22:58:36
-
-Accuracy: 0.5881 ± 0.0283
-Precision: 0.5813 ± 0.0199
-Recall: 0.6241 ± 0.1188
-F1: 0.5968 ± 0.0549
-
-Información adicional:
-Tipo de validación: StratifiedKFold
-Semilla: 42
-------------------------------------------------------------
-Modelo: Modelo base reducido con validación cruzada
-Fecha: 2025-05-18 23:02:04
-
-Accuracy: 0.5936 ± 0.0299
-Precision: 0.5928 ± 0.0319
-Recall: 0.6051 ± 0.0903
-F1: 0.5946 ± 0.0471
-
-Información adicional:
-Tipo de validación: StratifiedKFold
-Semilla: 42
+Hiperparámetros óptimos: {'embedding_dim': 64, 'lstm_units': 32, 'dropout_1': 0.3, 'lstm_units_2': 8, 'dropout_2': 0.4, 'dense_1': 64, 'dropout_3': 0.5, 'dense_2': 64, 'dropout_4': 0.3, 'tuner/epochs': 2, 'tuner/initial_epoch': 0, 'tuner/bracket': 2, 'tuner/round': 0}
 ------------------------------------------------------------
